@@ -7,7 +7,7 @@ const deleteBtn = document.querySelector('.delete')
 const favBtn = document.querySelector('.fav')
 
 // const openAiURL = `https://api.openai.com/v1`
-// const openAiURL = `http://localhost:3000`
+const baseURL = `http://localhost:4040`
 
 // openai endpoints: /images/generations
             //  /images/edits
@@ -16,39 +16,21 @@ const favBtn = document.querySelector('.fav')
 function generateImage(e) {
     e.preventDefault()
 
-    let prompt = document.querySelector('.prompt')
-
-    // let body = {
-    //     prompt: prompt.value,
-    //     n: 3,
-    //     size: "1024x1024"
-    // }
-
+    let inputPrompt = document.querySelector('.prompt').value
 
     let body = {
-        prompt: "big red dog",
+        prompt: inputPrompt,
         n: 3,
         size: "1024x1024"
     }
     
     axios
-    .post(`http://localhost:4040/images/generations`, body)
+    .post(`${baseURL}/images/generations`, body)
     .then((res) => {
         displayResults(res.data)
-        // console.log(res.data.data[0].url)
     })
-    .catch((err) => console.log(err))
-    // axios
-    // .get('http://localhost:4040/hello')
-    // .then((res) => console.log(res.data))
+    .catch(() => alert('Did you enter a prompt first?'))
 }
-
-
-
-// When user's input is processed, render the image results to the DOM
-// const showResults = () => {
-
-// }
 
 // Delete button removes that result image from the DOM
 // const deleteResult = () => {
@@ -73,15 +55,17 @@ function createResultCard(imageURL) {
     resultCard.innerHTML = `<img src="${imageURL}" alt="result image">
     <div class="result-btns">
         <button class="download" onclick="">Download</button>
-        <button class="fav" onclick="">F</button>
-        <button class="delete" onclick="">X</button>
+        <button class="fav" onclick="">
+        <i class="fa-solid fa-heart"></i></button>
+        <button class="delete" onclick="">
+        <i class="fa-solid fa-trash-can"></i></button>
     </div>`
 
 
     resultsContainer.appendChild(resultCard)
 }
 
-// Display all of the results from the api's response
+// Display all of the result cards from the api's response
 function displayResults(arr) {
     resultsContainer.innerHTML = ``
     for (let i = 0; i < arr.length; i++) {

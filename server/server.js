@@ -2,26 +2,19 @@ const express = require('express')
 const cors = require('cors')
 require('dotenv').config()
 
-// const corsOption = {
-//   origin: "http://localhost:4040",
-//   credentials: true,
-//   optionSuccessStatus: 200
-// }
-
 const app = express()
 app.use(express.json())
-// app.use(cors(corsOption))
 app.use(cors())
 
-// const { generateImage } = require('./controller')
+const { generateImage } = require('./controller')
 
-const { Configuration, OpenAIApi } = require("openai");
+// const { Configuration, OpenAIApi } = require("openai");
 
-const configuration = new Configuration({
-    apiKey: process.env.OPENAI_API_KEY,
-});
+// const configuration = new Configuration({
+//     apiKey: "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",
+// });
   
-const openai = new OpenAIApi(configuration);
+// const openai = new OpenAIApi(configuration);
 
 
 // openai endpoints: /images/generations
@@ -33,24 +26,7 @@ const openai = new OpenAIApi(configuration);
 //   res.send('got the response')
 // })
 
-// app.post('/images/generations', generateImage)
-app.post('/images/generations', async (req, res) => {
-  const { prompt, n, size } = req.body
-
-  const response = await openai.createImage({
-      prompt, // 1000 character max
-      n, // number of images generated per request
-      size // smaller is faster (256x256, 512x512, 1024x1024)
-  });
-
-  let imageURLs = [
-    response.data.data[0].url,
-    response.data.data[1].url,
-    response.data.data[2].url,
-  ]
-  res.send(imageURLs)
-  console.log(imageURLs)
-})
+app.post('/images/generations', generateImage)
 
 
 // Example of an image edit (uses /images/edits)

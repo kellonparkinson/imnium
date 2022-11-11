@@ -6,7 +6,7 @@
 body {
     width: 100vw;
     height: 100vh;
-    background: linear-gradient(137.38deg, #172E80 -1.4%, #5B2288 76.04%);
+    background: linear-gradient(120deg, #0A1334 20%, #7C29BD 120%);
     background-repeat: no-repeat;
     display: flex;
     flex-direction: column;
@@ -189,7 +189,7 @@ body {
 
     .prompt-form button {
         width: 25%;
-        height: 62px;
+        height: 54px;
         border-radius: 0 16px 16px 0;
         opacity: 0.64;
         border: none;

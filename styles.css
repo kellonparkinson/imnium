@@ -1,0 +1,292 @@
+* {
+    margin: 0;
+    font-family: sans-serif;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(137.38deg, #172E80 -1.4%, #5B2288 76.04%);
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.all-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.home-nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    padding: 50px 70px 0 0;
+    position: absolute;
+    right: 0;
+}
+
+.dash-nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    padding: 50px 70px 0 0;
+    position: absolute;
+    right: 0;
+    width: 50%;
+}
+
+.dash-title-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 50px 0 0 70px;
+    position: absolute;
+    left: 0;
+    width: 50%;
+}
+    .dash-title {
+        color: #fff;
+        font-size: 52px;
+    }
+
+.all-btns {
+    margin-right: 50px;
+}
+
+    .signup-btn1 {
+        background-color: #E20088;
+        color: #fff;
+        border: none;
+        height: 52px;
+        width: 150px;
+        margin-right: 0;
+    }
+
+    .signup-btn2 {
+        background-color: #E20088;
+        color: #fff;
+        border: none;
+        height: 52px;
+        width: 150px;
+        margin-left: 0;
+    }
+
+/* Main info for home page */
+.center-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    .home-info-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-evenly;
+        margin: 0 50px 0 40px;
+    }
+
+    .home-info-container h1 {
+        font-size: 128px;
+        font-weight: 700;
+        color: #fff;
+    }
+
+    .home-info-container h3 {
+        font-size: 64px;
+        font-weight: 200;
+        color: #fff;
+    }
+
+    .img-container {
+        width: 744px;
+        height: 665px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .home-img {
+        object-fit: cover;
+        position: relative;
+        width: 95%;
+        height: 100%;
+        border-radius: 32px;
+        top: 220px;
+        left: 50px;
+    }
+/* -------------------------------- */
+
+/* Bottom section on home page */
+.bottom-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 80%;
+    height: 255px;
+    background: rgba(217, 217, 217, 0.3);
+    backdrop-filter: blur(15px);
+    border-radius: 32px 32px 0px 0px;
+    border: solid 2px;
+    border-color: #fff;
+    border-bottom: none;
+    position: absolute;
+    bottom: 0;
+}
+    .desc-container {
+        margin-left: 50px;
+    }
+
+    .desc-container h4 {
+        font-size: 36px;
+        font-weight: 700;
+        color: #fff;
+    }
+
+    .desc-container article {
+        font-size: 28px;
+        font-weight: 200;
+        color: #fff;
+        margin: 20px 50px;
+    }
+/* -------------------------------------- */
+
+/* Dashboard page */
+.dash-main-container {
+    top: 40px;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.prompt-container {
+    width: 55%;
+    margin-bottom: 50px;
+}
+
+    .prompt-form {
+        width: 100%;
+        height: 66px;
+    }
+
+    .prompt-form input {
+        width: 70%;
+        height: 64px;
+        padding-left: 30px;
+        border-radius: 16px 0 0 16px;
+        border: none;
+    }
+
+    .prompt-form button {
+        width: 25%;
+        height: 62px;
+        border-radius: 0 16px 16px 0;
+        opacity: 0.64;
+        border: none;
+        transition: all 0.2s ease;
+    }
+
+    .prompt-form button:hover {
+        height: 66px;
+    }
+
+.results-container {
+    width: 80%;
+    height: 45%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    /* opacity: 0.5; */
+}
+
+    .result {
+        width: 30%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.1);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: 16px;
+        /* opacity: 1; */
+    }
+
+    .result img {
+        object-fit: cover;
+        width: 90%;
+        height: 90%;
+        border-radius: 8px;
+        margin: 20px 20px 0 20px;
+        /* opacity: 1; */
+    }
+
+    .result-btns {
+        width: 90%;
+        height: 52px;
+        display: flex;
+        justify-content: space-between;
+        margin: 20px;
+    }
+        .download {
+            width: 50%;
+            border-radius: 8px;
+            border: none;
+            background-color: #E20088;
+            color: #fff;
+        }
+
+        .fav, .delete {
+            width: 52px;
+            border-radius: 8px;
+            border: none;
+        }
+@media only screen and (max-width: 1250px) {
+    .dash-main-container {
+        top: 40px;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .prompt-container {
+        width: 80%;
+        margin-bottom: 50px;
+    }
+}
+@media only screen and (max-width: 609px) {
+    body {
+        width: 100vw;
+        height: 100vh;
+        background: linear-gradient(137.38deg, #172E80 -1.4%, #5B2288 76.04%);
+        background-repeat: no-repeat;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .results-container {
+        width: 80%;
+        height: 45%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        /* opacity: 0.5; */
+    }
+}

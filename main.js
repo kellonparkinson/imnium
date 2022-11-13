@@ -6,9 +6,9 @@ const downloadBtn = document.querySelector('.download')
 const deleteBtn = document.querySelector('.delete')
 const favBtn = document.querySelector('.fav')
 
-// const openAiURL = `https://api.openai.com/v1`
 const baseURL = `http://localhost:4040`
 
+// const openAiURL = `https://api.openai.com/v1`
 // openai endpoints: /images/generations
             //  /images/edits
             //  /images/variations
@@ -29,17 +29,33 @@ function generateImage(e) {
     .then((res) => {
         displayResults(res.data)
     })
-    .catch(() => alert('Did you enter a prompt first?'))
+    .catch((err) => {
+        alert('Did you enter a prompt first?')
+        console.log(err)
+    })
 }
 
 // Delete button removes that result image from the DOM
-// const deleteResult = () => {
+const deleteResult = (id) => {
+    axios
+    .delete(`${baseURL}/images/${id}`)
+    .then((res) => {
+        displayResults(res.data)
+        console.log(res.data)
+    })
+    .catch(() => console.log('Error deleting image'))
+}
 
+// Favorite button adds result image to a favorites list
+// const addToFavs = () => {
+//     console.log('added')
+
+//     favBtn.classList.add('yes')
 // }
 
-// Favorite button adds reuslt image to a favorites list
-// const addToFavs = () => {
-
+// const removeFromFavs = () => {
+//     favBtn.classList.remove('fav')
+//     favBtn.classList.add('fav')
 // }
 
 // Download button saves result image to user's computer OR opens image in another window where it can be saved
@@ -48,16 +64,16 @@ function generateImage(e) {
 // }
 
 // Create divs for each result image
-function createResultCard(imageURL) {
+function createResultCard(obj) {
     const resultCard = document.createElement('div')
     resultCard.classList.add('result')
 
-    resultCard.innerHTML = `<img src="${imageURL}" alt="result image">
+    resultCard.innerHTML = `<img src="${obj.url}" alt="result image">
     <div class="result-btns">
         <button class="download" onclick="">Download</button>
-        <button class="fav" onclick="">
+        <button class="fav" onclick="removeFromFavs()">
         <i class="fa-solid fa-heart"></i></button>
-        <button class="delete" onclick="">
+        <button class="delete" onclick="deleteResult(${obj.id})">
         <i class="fa-solid fa-trash-can"></i></button>
     </div>`
 
@@ -65,7 +81,7 @@ function createResultCard(imageURL) {
     resultsContainer.appendChild(resultCard)
 }
 
-// Display all of the result cards from the api's response
+// Invoke createResultCard and display results from the api's response
 function displayResults(arr) {
     resultsContainer.innerHTML = ``
     for (let i = 0; i < arr.length; i++) {
@@ -73,5 +89,20 @@ function displayResults(arr) {
     }
 }
 
+// Display favorites on the favorites page
+// function displayFavorites(arr) {
+
+// }
+
 // Event Listeners
 promptForm.addEventListener('submit', generateImage)
+
+// favBtn.addEventListener('click', () => {
+//     const isFav = favBtn.classList.contains('fav')
+    
+//     if (isFav) {
+//         addToFavs()
+//     } else {
+//         removeFromFavs()
+//     }
+// })

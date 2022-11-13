@@ -6,16 +6,7 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 
-const { generateImage } = require('./controller')
-
-// const { Configuration, OpenAIApi } = require("openai");
-
-// const configuration = new Configuration({
-//     apiKey: "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",
-// });
-  
-// const openai = new OpenAIApi(configuration);
-
+const { generateImage, deleteResult, addToFavs } = require('./controller')
 
 // openai endpoints: /images/generations
                 //   /images/edits
@@ -27,21 +18,8 @@ const { generateImage } = require('./controller')
 // })
 
 app.post('/images/generations', generateImage)
-
-
-// Example of an image edit (uses /images/edits)
-// NOTE: this is only for masking
-
-  // const response = await openai.createImageEdit(
-  //   fs.createReadStream("sunlit_lounge.png"),
-  //   fs.createReadStream("mask.png"),
-  //   "A sunlit indoor lounge area with a pool containing a flamingo",
-  //   1,
-  //   "1024x1024"
-  // );
-
-  // image_url = response.data.data[0].url;
-//-------------------------------------------
+app.delete('/images/:id', deleteResult)
+app.post('/images/favorites', addToFavs)
 
 // Image variations (uses /images/variations)
   // const response = await openai.createImageVariation(

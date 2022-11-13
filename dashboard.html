@@ -15,67 +15,26 @@
     
     <header class="dash-nav">
         <div class="nav-btns">
-            <button class="all-btns home-btns">FAVORITES</button>
-            <button class="all-btns home-btns">COMMUNITY</button>
+            <button class="all-btns dash-btns">Favorites</button>
+            <button class="all-btns dash-btns">Community</button>
             
-            <button class="all-btns login-btn">PROFILE</button>
-            <button class="all-btns signup-btn1">SIGN OUT</button>
+            <button class="all-btns profile-btn">PROFILE</button>
+            <button class="all-btns signout-btn" onclick="location.href='./index.html'">SIGN OUT</button>
         </div>
     </header>
     
-    <div class="dash-main-container">
+    <section class="dash-main-container">
         <div class="prompt-container">
             <form class="prompt-form">
-                <input type="text" class="prompt" placeholder="Imnium needs your imagination. What would you like to see?">
+                <input type="text" class="prompt" placeholder="Imnium needs your imagination. What would you like to see?" onfocus="this.placeholder=''" onblur="this.placeholder='Imnium needs your imagination. What would you like to see?'">
                 <button class="generate">Generate</button>
             </form>
         </div>
     
 
         <section class="results-container">
-            <!-- <div class="result">
-                <img src="./assets/devountain1-midj.png" alt="result image">
-                <div class="result-btns">
-                    <button class="download">
-                        Download <i class="fa-solid fa-arrow-turn-down"></i>
-                    </button>
-                    <button class="fav">
-                        <i class="fa-solid fa-heart"></i>
-                    </button>
-                    <button class="delete">
-                        <i class="fa-solid fa-trash-can"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="result">
-                <img src="./assets/devmountain2-midj.png" alt="result image">
-                <div class="result-btns">
-                    <button class="download">
-                        Download <i class="fa-solid fa-arrow-turn-down"></i></button>
-                    <button class="fav">
-                        <i class="fa-solid fa-heart"></i>
-                    </button>
-                    <button class="delete">
-                        <i class="fa-solid fa-trash-can"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="result">
-                <img src="./assets/devmountain3-midj.png" alt="result image">
-                <div class="result-btns">
-                    <button class="download">
-                        Download <i class="fa-solid fa-arrow-turn-down"></i>
-                    </button>
-                    <button class="fav">
-                        <i class="fa-solid fa-heart"></i>
-                    </button>
-                    <button class="delete">
-                        <i class="fa-solid fa-trash-can"></i>
-                    </button>
-                </div>
-            </div> -->
         </section>
-    </div>
+    </section>
 
     <script src="https://kit.fontawesome.com/353604add3.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.1.3/axios.min.js"></script>

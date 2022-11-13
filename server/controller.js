@@ -1,4 +1,5 @@
-const allImgURLs = require('./db.json')
+const allImgs = require('./db.json')
+const favImgs = require('./favoritesDb.json')
 
 require('dotenv').config()
 
@@ -10,6 +11,8 @@ const configuration = new Configuration({
   
 const openai = new OpenAIApi(configuration);
 
+let nextId = 1
+
 module.exports = {
     generateImage: async (req, res) => {
         const { prompt, n, size } = req.body
@@ -19,20 +22,42 @@ module.exports = {
             n,
             size
         });
-      
-        let imageURLs = [
-          response.data.data[0].url,
-          response.data.data[1].url,
-          response.data.data[2].url,
+
+        let resURLs = [
+            response.data.data[0].url,
+            response.data.data[1].url,
+            response.data.data[2].url
         ]
 
-        // let newURL = {
-        //     id: nextId,
-        //     url: response.data.data[0].url
-        // }
-        res.send(imageURLs)
+        let newURL = {}
+        for (let i = 0; i < resURLs.length; i++) {
+            newURL = {
+                id: nextId,
+                url: response.data.data[i].url,
+                favorite: false
+            }
+            nextId++
+            allImgs.push(newURL)
+        }
+        // console.log(allImgURLs)
+        res.send(allImgs)
     },
     deleteResult: (req, res) => {
+        const idToDelete = req.params.id
+        let index = allImgs.findIndex((e) => e.id === +idToDelete)
+        allImgs.splice(index, 1)
+        res.send(allImgs)
+    },
+    addToFavs: (req, res) => {
+        const { id, url, favorite } = req.params
 
+        // let newFav = {
+        //     id,
+        //     url,
+        //     favorite: true
+        // }
+
+        // favImgs.push(newFav)
+        // res.send(favImgs)
     }
 }

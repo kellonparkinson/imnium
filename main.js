@@ -48,9 +48,17 @@ const deleteResult = (id) => {
 }
 
 // Favorite button adds result image to a favorites list
-function addToFavs() {
-    favBtn.classList.remove('heart')
-    favBtn.classList.add('favorite')
+function toggleFavs(event) {
+    let theFavBtn = event.target
+    console.log(theFavBtn)
+
+    if (theFavBtn.classList.contains('heart')){
+        theFavBtn.classList.remove('heart')
+        theFavBtn.classList.add('favorite')
+    } else {
+        theFavBtn.classList.remove('favorite')
+        theFavBtn.classList.add('heart')
+    }
 }
 
 // function removeFromFavs() {
@@ -59,9 +67,14 @@ function addToFavs() {
 // }
 
 // Download button saves result image to user's computer OR opens image in another window where it can be saved
-// const download = () => {
-    
-// }
+const downloadImg = (url) => {
+    const a = document.createElement('a')
+    a.href = url
+    a.download = url.split('/').pop()
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+}
 
 // Create divs for each result image
 function createResultCard(obj) {
@@ -70,8 +83,8 @@ function createResultCard(obj) {
 
     resultCard.innerHTML = `<img src="${obj.url}" alt="result image">
     <div class="result-btns">
-        <button class="download">Download</button>
-        <button class="heart" onclick="addToFavs()">
+        <button class="download" oclick="downloadImg(${obj.url})">Download</button>
+        <button class="heart" onclick="toggleFavs(event)">
         <i class="fa-solid fa-heart"></i></button>
         <button class="delete" onclick="deleteResult(${obj.id})">
         <i class="fa-solid fa-trash-can"></i></button>

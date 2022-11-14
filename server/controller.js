@@ -1,10 +1,11 @@
 const allImgs = require('./db.json')
-const favImgs = require('./favoritesDb.json')
 
 require('dotenv').config()
 
-const { Configuration, OpenAIApi } = require("openai");
+// const Sequelize = require('sequelize')
 
+// const {OPENAI_API_KEY} = process.env
+const { Configuration, OpenAIApi } = require("openai");
 const configuration = new Configuration({
     apiKey: "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",
 });
@@ -14,6 +15,26 @@ const openai = new OpenAIApi(configuration);
 let nextId = 1
 
 module.exports = {
+    // seed: (req, res) => {
+    //     sequelize.query(`
+    //         drop table if exists favorites;
+    //         drop table if exists results;
+
+    //         CREATE TABLE results (
+    //             result_id SERIAL PRIMARY KEY, 
+    //             url VARCHAR
+    //         );
+
+    //         CREATE TABLE favorites (
+    //             fav_id SERIAL PRIMARY KEY,
+    //             url VARCHAR
+    //         );
+
+    //         INSERT INTO results (url)
+    //         VALUES
+    //         ()
+    //     `)
+    // },
     generateImage: async (req, res) => {
         const { prompt, n, size } = req.body
       

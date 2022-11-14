@@ -4,7 +4,7 @@ const generateBtn = document.querySelector('.generate')
 const resultsContainer = document.querySelector('.results-container')
 const downloadBtn = document.querySelector('.download')
 const deleteBtn = document.querySelector('.delete')
-const favBtn = document.querySelector('.fav')
+const favBtn = document.querySelector('.heart')
 
 const baseURL = `http://localhost:4040`
 
@@ -28,6 +28,7 @@ function generateImage(e) {
     .post(`${baseURL}/images/generations`, body)
     .then((res) => {
         displayResults(res.data)
+        console.log(res.data)
     })
     .catch((err) => {
         alert('Did you enter a prompt first?')
@@ -47,15 +48,14 @@ const deleteResult = (id) => {
 }
 
 // Favorite button adds result image to a favorites list
-// const addToFavs = () => {
-//     console.log('added')
+function addToFavs() {
+    favBtn.classList.remove('heart')
+    favBtn.classList.add('favorite')
+}
 
-//     favBtn.classList.add('yes')
-// }
-
-// const removeFromFavs = () => {
-//     favBtn.classList.remove('fav')
-//     favBtn.classList.add('fav')
+// function removeFromFavs() {
+//     favBtn.classList.remove('favorite')
+//     favBtn.classList.add('heart')
 // }
 
 // Download button saves result image to user's computer OR opens image in another window where it can be saved
@@ -70,13 +70,12 @@ function createResultCard(obj) {
 
     resultCard.innerHTML = `<img src="${obj.url}" alt="result image">
     <div class="result-btns">
-        <button class="download" onclick="">Download</button>
-        <button class="fav" onclick="removeFromFavs()">
+        <button class="download">Download</button>
+        <button class="heart" onclick="addToFavs()">
         <i class="fa-solid fa-heart"></i></button>
         <button class="delete" onclick="deleteResult(${obj.id})">
         <i class="fa-solid fa-trash-can"></i></button>
     </div>`
-
 
     resultsContainer.appendChild(resultCard)
 }
@@ -90,7 +89,7 @@ function displayResults(arr) {
 }
 
 // Display favorites on the favorites page
-// function displayFavorites(arr) {
+// function displayFavorites() {
 
 // }
 
@@ -98,9 +97,9 @@ function displayResults(arr) {
 promptForm.addEventListener('submit', generateImage)
 
 // favBtn.addEventListener('click', () => {
-//     const isFav = favBtn.classList.contains('fav')
-    
-//     if (isFav) {
+//     const isNotFavorited = favBtn.classList.contains('heart')
+
+//     if (isNotFavorited) {
 //         addToFavs()
 //     } else {
 //         removeFromFavs()

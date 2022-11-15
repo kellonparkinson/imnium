@@ -6,7 +6,7 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 
-const { generateImage, deleteResult, addToFavs } = require('./controller')
+const { seed, generateImage, deleteResult, addToFavs } = require('./controller')
 
 // openai endpoints: /images/generations
                 //   /images/edits
@@ -20,6 +20,7 @@ const { generateImage, deleteResult, addToFavs } = require('./controller')
 app.post('/images/generations', generateImage)
 app.delete('/images/:id', deleteResult)
 app.post('/images/favorites', addToFavs)
+app.post('/seed', seed)
 
 // Image variations (uses /images/variations)
   // const response = await openai.createImageVariation(

@@ -2,7 +2,7 @@ require('dotenv').config()
 const Sequelize = require('sequelize')
 const {CONNECTION_STRING} = process.env
 
-const sequelize = new Sequelize(CONNECTION_STRING, {
+const sequelize = new Sequelize('postgres://vzmjfjzhtqctcz:fc1ed8fec174b5f9d4c4537c985a6e3402254721204124e3fed530798a1aa60c@ec2-54-163-34-107.compute-1.amazonaws.com:5432/da5l0m2kd0mpjj', {
     dialect: 'postgres',
     dialectOptions: {
       ssl: {
@@ -24,6 +24,21 @@ const allImgs = require('./db.json')
 let nextId = 1
 
 module.exports = {
+    seed: (req, res) => {
+        sequelize.query(`
+        drop table if exists results;
+        drop table if exists favorites;
+
+        CREATE TABLE results (
+            result_id SERIAL PRIMARY KEY, 
+            url VARCHAR,
+            favorite BOOLEAN NOT NULL
+        );
+        `).then(() => {
+            console.log('DB seeded.')
+            res.sendStatus(200)
+        }).catch((err) => console.log('error with database', err))
+    },
     generateImage: async (req, res) => {
         const { prompt, n, size } = req.body
       

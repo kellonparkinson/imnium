@@ -54,18 +54,17 @@ module.exports = {
             response.data.data[2].url
         ]
 
-        let newURL = {}
-        for (let i = 0; i < resURLs.length; i++) {
-            newURL = {
-                id: nextId,
-                url: response.data.data[i].url,
-                favorite: false
-            }
-            nextId++
-            allImgs.push(newURL)
-        }
-        // console.log(allImgURLs)
-        res.send(allImgs)
+        // let newURL = {}
+        // for (let i = 0; i < resURLs.length; i++) {
+        //     newURL = {
+        //         id: nextId,
+        //         url: response.data.data[i].url,
+        //         favorite: false
+        //     }
+        //     nextId++
+        //     allImgs.push(newURL)
+        // }
+        // res.send(allImgs)
 
         sequelize.query(`
             INSERT INTO results (url, favorite)
@@ -73,17 +72,37 @@ module.exports = {
                 ('${response.data.data[0].url}', false),
                 ('${response.data.data[1].url}', false),
                 ('${response.data.data[2].url}', false);
+
+            SELECT * FROM results
+            ORDER BY result_id ASC;
         `)
-        .then(() => {
+        .then((dbRes) => {
             console.log('added to table')
+
+            let dbArr = dbRes[0]
+            let lastThree = dbArr.slice(-3)
+            res.send(lastThree)
         })
         .catch((err) => console.log(err))
     },
     deleteResult: (req, res) => {
-        const idToDelete = req.params.id
-        let index = allImgs.findIndex((e) => e.id === +idToDelete)
-        allImgs.splice(index, 1)
-        res.send(allImgs)
+        const { id } = req.params
+
+        sequelize.query(`
+            DELETE FROM results
+            WHERE result_id = ${id};
+
+            SELECT * FROM results
+            ORDER BY result_id ASC;
+        `)
+        .then((dbRes) => {
+            console.log('deleted from table')
+
+            let newArr = dbRes[0]
+            let lastTwo = newArr.slice(-2)
+            res.send(lastTwo)
+        })
+        .catch((err) => console.log("Error deleting item", err))
     },
     toggleFavs: (req, res) => {
         console.log("hit toggleFavs")

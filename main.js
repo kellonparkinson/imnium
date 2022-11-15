@@ -2,6 +2,7 @@ const promptForm = document.querySelector('.prompt-form')
 const generateBtn = document.querySelector('.generate')
 
 const resultsContainer = document.querySelector('.results-container')
+const favoritesContainer = document.querySelector('.favorites-container')
 const downloadBtn = document.querySelector('.download')
 const deleteBtn = document.querySelector('.delete')
 const favBtn = document.querySelector('.heart')
@@ -21,14 +22,14 @@ function generateImage(e) {
     let body = {
         prompt: inputPrompt,
         n: 3,
-        size: "1024x1024"
+        size: "512x512"
     }
     
     axios
     .post(`${baseURL}/images/generations`, body)
     .then((res) => {
         displayResults(res.data)
-        console.log(res.data)
+        // console.log(res.data)
     })
     .catch((err) => {
         alert('Did you enter a prompt first?')
@@ -41,8 +42,8 @@ const deleteResult = (id) => {
     axios
     .delete(`${baseURL}/images/${id}`)
     .then((res) => {
-        displayResults(res.data)
-        console.log(res.data)
+        displayAfterDelete(res.data)
+        // console.log(res.data)
     })
     .catch(() => console.log('Error deleting image'))
 }
@@ -66,7 +67,7 @@ function toggleFavs(event, id) {
 }
 
 // "Favorites" axios functions
-// Takes in the id and sends to backend to match with SQL table id
+// Takes in the id and sends to backend to match with results table id
     // Makes favorite = true
 function makeFavTrue(resultId) {
     console.log(resultId);
@@ -78,7 +79,7 @@ function makeFavTrue(resultId) {
     
     axios
     .post(`${baseURL}/images/favorites`, body)
-    .then((res) => console.log('Added to favorites'))
+    .then(() => console.log('Added to favorites'))
     .catch((err) => console.log(err))
 }
     // Makes favorite = false
@@ -92,7 +93,7 @@ function makeFavFalse(resultId) {
     
     axios
     .post(`${baseURL}/images/favorites`, body)
-    .then((res) => console.log('Removed from favorites'))
+    .then(() => console.log('Removed from favorites'))
     .catch((err) => console.log(err))
 }
 
@@ -105,9 +106,9 @@ function createResultCard(obj) {
     <div class="result-btns">
         <a class="download" href="${obj.url}" download="Imnium-result">
             <i class="fa-solid fa-circle-down"></i>Download</a>
-        <button class="res-btn heart" onclick="toggleFavs(event, ${obj.id})">
+        <button class="res-btn heart" onclick="toggleFavs(event, ${obj.result_id})">
             <i class="fa-solid fa-heart"></i></button>
-        <button class="res-btn delete" onclick="deleteResult(${obj.id})">
+        <button class="res-btn delete" onclick="deleteResult(${obj.result_id})">
             <i class="fa-solid fa-trash-can"></i></button>
     </div>`
 
@@ -117,6 +118,15 @@ function createResultCard(obj) {
 // Invoke createResultCard and display results from the api's response
 function displayResults(arr) {
     resultsContainer.innerHTML = ``
+
+    for (let i = 0; i < arr.length; i++) {
+        createResultCard(arr[i])
+    }
+}
+// We only want the last two items in the array after one is deleted so that we only have the current results being displayed
+function displayAfterDelete(arr) {
+    resultsContainer.innerHTML = ``
+
     for (let i = 0; i < arr.length; i++) {
         createResultCard(arr[i])
     }

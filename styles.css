@@ -135,6 +135,10 @@ body {
     .on-imagine {
         border-bottom: solid 4px #9a34e8;
     }
+/* Favorites navbar */
+.on-favorites {
+    border-bottom: solid 4px #9a34e8;
+}
 
 /* Main info for home page */
 .center-container {
@@ -398,8 +402,9 @@ body {
             }
 
             .favorite {
-                color: #E20088;
-                font-size: 20px;
+                background-color: #E20088;
+                color: #fff;
+                font-size: 22px;
             }
 
 /* Gallery Screen  */

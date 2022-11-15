@@ -256,7 +256,7 @@ body {
 
         .prompt-form input::placeholder {
             color: #fff;
-            opacity: 1;
+            opacity: .5;
             font-size: 15px;
         }
 

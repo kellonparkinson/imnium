@@ -47,31 +47,54 @@ const deleteResult = (id) => {
     .catch(() => console.log('Error deleting image'))
 }
 
-// Heart button adds/removes result image to/from favorites list
-function toggleFavs(event) {
+// Heart button styling gets changed,
+    // and favorites column is updated in the database
+    // by calling makeFavTrue or makeFavFalse functions
+function toggleFavs(event, id) {
     let theFavBtn = event.target
-    console.log(theFavBtn)
+    // console.log(theFavBtn)
 
     if (theFavBtn.classList.contains('heart')){
         theFavBtn.classList.remove('heart')
         theFavBtn.classList.add('favorite')
+        makeFavTrue(id)
     } else {
         theFavBtn.classList.remove('favorite')
         theFavBtn.classList.add('heart')
+        makeFavFalse(id)
     }
 }
 
-// Download button saves result image to user's computer OR opens image in another window where it can be saved
-// function downloadImg(imgURL) {
-//     console.log(imgURL)
-
-//     const a = document.createElement('a')
-//     a.href = url
-//     a.download = "Imnium-result"
-//     document.body.appendChild(a)
-//     a.click()
-//     document.body.removeChild(a)
-// }
+// "Favorites" axios functions
+// Takes in the id and sends to backend to match with SQL table id
+    // Makes favorite = true
+function makeFavTrue(resultId) {
+    console.log(resultId);
+    
+    let body = {
+        id: resultId,
+        favorite: true
+    }
+    
+    axios
+    .post(`${baseURL}/images/favorites`, body)
+    .then((res) => console.log('Added to favorites', res))
+    .catch((err) => console.log(err))
+}
+    // Makes favorite = false
+function makeFavFalse(resultId) {
+    console.log(resultId)
+    
+    let body = {
+        id: resultId,
+        favorite: false
+    }
+    
+    axios
+    .post(`${baseURL}/images/favorites`, body)
+    .then((res) => console.log('Removed from favorites', res))
+    .catch((err) => console.log(err))
+}
 
 // Create divs for each result image
 function createResultCard(obj) {
@@ -82,7 +105,7 @@ function createResultCard(obj) {
     <div class="result-btns">
         <a class="download" href="${obj.url}" download="Imnium-result">
             <i class="fa-solid fa-circle-down"></i>Download</a>
-        <button class="res-btn heart" onclick="toggleFavs(event)">
+        <button class="res-btn heart" onclick="toggleFavs(event, ${obj.id})">
             <i class="fa-solid fa-heart"></i></button>
         <button class="res-btn delete" onclick="deleteResult(${obj.id})">
             <i class="fa-solid fa-trash-can"></i></button>

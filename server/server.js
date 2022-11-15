@@ -1,12 +1,13 @@
 const express = require('express')
 const cors = require('cors')
-// require('dotenv').config()
+require('dotenv').config()
 
 const app = express()
 app.use(express.json())
 app.use(cors())
 
-const { seed, generateImage, deleteResult, addToFavs } = require('./controller')
+const { PORT } = process.env
+const { seed, generateImage, deleteResult, toggleFavs } = require('./controller')
 
 // openai endpoints: /images/generations
                 //   /images/edits
@@ -16,11 +17,11 @@ const { seed, generateImage, deleteResult, addToFavs } = require('./controller')
 //   console.log('hello is working')
 //   res.send('got the response')
 // })
+app.post('/seeds33d', seed)
 
 app.post('/images/generations', generateImage)
 app.delete('/images/:id', deleteResult)
-app.post('/images/favorites', addToFavs)
-app.post('/seed', seed)
+app.post('/images/favorites', toggleFavs)
 
 // Image variations (uses /images/variations)
   // const response = await openai.createImageVariation(
@@ -31,5 +32,4 @@ app.post('/seed', seed)
 
   // image_url = response.data.data[0].url;
 //-------------------------------------------
-const PORT = 4040
 app.listen(PORT, () => console.log(`Listening on ${PORT}`))

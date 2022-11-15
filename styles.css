@@ -97,6 +97,7 @@ body {
         background-color: rgba(255, 255, 255, 0);
         color: #fff;
         font-weight: 200;
+        padding-bottom: 6px;
     }
 
         .on-gallery {
@@ -128,6 +129,11 @@ body {
         background-color: rgba(255, 255, 255, 0);
         color: #fff;
         font-weight: 200;
+        padding-bottom: 6px;
+    }
+
+    .on-imagine {
+        border-bottom: solid 4px #9a34e8;
     }
 
 /* Main info for home page */
@@ -143,7 +149,7 @@ body {
         flex-direction: column;
         align-items: flex-start;
         justify-content: space-evenly;
-        margin: 0 50px 0 40px;
+        margin: 10px 50px 0 40px;
     }
 
     .home-info-container h1 {
@@ -170,11 +176,11 @@ body {
     .home-img {
         object-fit: cover;
         position: relative;
-        width: 95%;
+        width: 85%;
         height: 100%;
         border-radius: 32px;
-        top: 220px;
-        left: 50px;
+        top: 200px;
+        left: 70px;
     }
 /* -------------------------------- */
 
@@ -185,7 +191,7 @@ body {
     align-items: center;
     flex-wrap: wrap;
     width: 80%;
-    height: 255px;
+    height: 285px;
     background: rgba(217, 217, 217, 0.3);
     backdrop-filter: blur(15px);
     border-radius: 32px 32px 0px 0px;
@@ -317,7 +323,7 @@ body {
             justify-content: center;
             align-items: center;
             border-radius: 16px;
-            opacity: 0.1;
+            opacity: 0;
             z-index: 0;
         }
             .invisible img {
@@ -343,31 +349,56 @@ body {
     }
         .download {
             width: 50%;
+            height: 100%;
             border-radius: 8px;
             border: none;
             background-color: #E20088;
             color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             cursor: pointer;
             font-size: 16px;
+            font-weight: 600;
+            outline: none;
+            transition: all 0.2s ease;
         }
+            .download:link {
+                text-decoration: none;
+            }
+            .download:link {
+                text-decoration: none;
+            }
+            .download:hover {
+                border: solid 2px #fff;
+                text-decoration: none;
+            }
+            .download:hover {
+                text-decoration: none;
+            }
 
-        .heart, .delete {
+            .download i {
+                padding-right: 6px;
+                font-size: 20px;
+            }
+
+        .res-btn {
             width: 52px;
+            height: 100%;
             border-radius: 8px;
             border: none;
             cursor: pointer;
-            font-size: 18px;
+            outline: none;
         }
+            .heart, .delete {
+                color: #5B2288;
+                font-size: 18px;
+            }
 
-        .favorite {
-            width: 52px;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-            font-size: 18px;
-            background-color: #E20088;
-            cursor: pointer;
-        }
+            .favorite {
+                color: #E20088;
+                font-size: 20px;
+            }
 
 /* Gallery Screen  */
 .gallery-container {

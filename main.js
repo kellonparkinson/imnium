@@ -47,7 +47,7 @@ const deleteResult = (id) => {
     .catch(() => console.log('Error deleting image'))
 }
 
-// Favorite button adds result image to a favorites list
+// Heart button adds/removes result image to/from favorites list
 function toggleFavs(event) {
     let theFavBtn = event.target
     console.log(theFavBtn)
@@ -61,20 +61,17 @@ function toggleFavs(event) {
     }
 }
 
-// function removeFromFavs() {
-//     favBtn.classList.remove('favorite')
-//     favBtn.classList.add('heart')
-// }
-
 // Download button saves result image to user's computer OR opens image in another window where it can be saved
-const downloadImg = (url) => {
-    const a = document.createElement('a')
-    a.href = url
-    a.download = url.split('/').pop()
-    document.body.appendChild(a)
-    a.click()
-    document.body.removeChild(a)
-}
+// function downloadImg(imgURL) {
+//     console.log(imgURL)
+
+//     const a = document.createElement('a')
+//     a.href = url
+//     a.download = "Imnium-result"
+//     document.body.appendChild(a)
+//     a.click()
+//     document.body.removeChild(a)
+// }
 
 // Create divs for each result image
 function createResultCard(obj) {
@@ -83,11 +80,12 @@ function createResultCard(obj) {
 
     resultCard.innerHTML = `<img src="${obj.url}" alt="result image">
     <div class="result-btns">
-        <button class="download" oclick="downloadImg(${obj.url})">Download</button>
-        <button class="heart" onclick="toggleFavs(event)">
-        <i class="fa-solid fa-heart"></i></button>
-        <button class="delete" onclick="deleteResult(${obj.id})">
-        <i class="fa-solid fa-trash-can"></i></button>
+        <a class="download" href="${obj.url}" download="Imnium-result">
+            <i class="fa-solid fa-circle-down"></i>Download</a>
+        <button class="res-btn heart" onclick="toggleFavs(event)">
+            <i class="fa-solid fa-heart"></i></button>
+        <button class="res-btn delete" onclick="deleteResult(${obj.id})">
+            <i class="fa-solid fa-trash-can"></i></button>
     </div>`
 
     resultsContainer.appendChild(resultCard)
@@ -108,13 +106,3 @@ function displayResults(arr) {
 
 // Event Listeners
 promptForm.addEventListener('submit', generateImage)
-
-// favBtn.addEventListener('click', () => {
-//     const isNotFavorited = favBtn.classList.contains('heart')
-
-//     if (isNotFavorited) {
-//         addToFavs()
-//     } else {
-//         removeFromFavs()
-//     }
-// })

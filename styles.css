@@ -262,6 +262,8 @@ body {
 
         .prompt-form input:focus {
             border: solid 4px #9a34e8;
+            /* box-shadow: 4px 4px 8px #6e25a5,
+             -4px -4px 8px #6e25a5; */
         }
 
     .prompt-form button {

@@ -78,7 +78,7 @@ function makeFavTrue(resultId) {
     
     axios
     .post(`${baseURL}/images/favorites`, body)
-    .then((res) => console.log('Added to favorites', res))
+    .then((res) => console.log('Added to favorites'))
     .catch((err) => console.log(err))
 }
     // Makes favorite = false
@@ -92,7 +92,7 @@ function makeFavFalse(resultId) {
     
     axios
     .post(`${baseURL}/images/favorites`, body)
-    .then((res) => console.log('Removed from favorites', res))
+    .then((res) => console.log('Removed from favorites'))
     .catch((err) => console.log(err))
 }
 

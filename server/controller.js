@@ -86,7 +86,8 @@ module.exports = {
         res.send(allImgs)
     },
     toggleFavs: (req, res) => {
-        const { id, favorite } = req.params
+        console.log("hit toggleFavs")
+        const { id, favorite } = req.body
 
         if (favorite === true) {
             sequelize.query(`

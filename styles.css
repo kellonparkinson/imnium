@@ -434,6 +434,41 @@ body {
         width: 19%;
     }
 
+/* Favorites Screen */
+.favorites-container {
+    width: 90%;
+    height: 88%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    z-index: 1;
+}
+
+    .favorites-container .favorites-card {
+        width: 280px;
+        height: 380px;
+        background-color: rgba(255, 255, 255, 0.1);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: 16px;
+        margin: 12px;
+        box-shadow:  9px 9px 32px #1e0d44;
+    }
+
+    .favorites-card img {
+        object-fit: cover;
+        width: 90%;
+        height: 90%;
+        border-radius: 8px;
+        margin: 20px 20px 0 20px;
+    }
+
+/* Media Styling */
 @media only screen and (max-width: 1250px) {
     .dash-main-container {
         top: 40px;

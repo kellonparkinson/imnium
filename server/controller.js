@@ -54,18 +54,6 @@ module.exports = {
             response.data.data[2].url
         ]
 
-        // let newURL = {}
-        // for (let i = 0; i < resURLs.length; i++) {
-        //     newURL = {
-        //         id: nextId,
-        //         url: response.data.data[i].url,
-        //         favorite: false
-        //     }
-        //     nextId++
-        //     allImgs.push(newURL)
-        // }
-        // res.send(allImgs)
-
         sequelize.query(`
             INSERT INTO results (url, favorite)
             VALUES
@@ -131,5 +119,20 @@ module.exports = {
             })
             .catch((err) => console.log("Error removing favorite", err))
         }
+    },
+    getFavorites: (req, res) => {
+        sequelize.query(`
+            SELECT * FROM results
+            WHERE favorite = true;
+        `)
+        .then((dbRes) => {
+            console.log('Retrieved favorites')
+            res.send(dbRes[0])
+        })
+        .catch((err) => console.log(err))
+    },
+    testGet: (req, res) => {
+        console.log('test get worked on backend')
+        res.send('test get worked on front end')
     }
 }

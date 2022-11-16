@@ -7,7 +7,7 @@ app.use(express.json())
 app.use(cors())
 
 const { PORT } = process.env
-const { seed, generateImage, deleteResult, toggleFavs } = require('./controller')
+const { seed, generateImage, deleteResult, toggleFavs, getFavorites, testGet } = require('./controller')
 
 // openai endpoints: /images/generations
                 //   /images/edits
@@ -19,6 +19,8 @@ const { seed, generateImage, deleteResult, toggleFavs } = require('./controller'
 // })
 app.post('/seeds33d', seed)
 
+app.get('/images/test', testGet)
+app.get('/images/favorites', getFavorites)
 app.post('/images/generations', generateImage)
 app.delete('/images/:id', deleteResult)
 app.post('/images/favorites', toggleFavs)

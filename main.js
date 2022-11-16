@@ -2,32 +2,41 @@ const promptForm = document.querySelector('.prompt-form')
 const generateBtn = document.querySelector('.generate')
 
 const resultsContainer = document.querySelector('.results-container')
-const favoritesContainer = document.querySelector('.favorites-container')
+
 const downloadBtn = document.querySelector('.download')
 const deleteBtn = document.querySelector('.delete')
 const favBtn = document.querySelector('.heart')
 
 const baseURL = `http://localhost:4040`
 
-// const openAiURL = `https://api.openai.com/v1`
-// openai endpoints: /images/generations
-            //  /images/edits
-            //  /images/variations
+// Loading indicator
+function showLoading() {
+    resultsContainer.innerHTML = `<h1>Loading<h1>`
+    console.log("running load")
+}
+
+function hideLoading() {
+    resultsContainer.innerHTML = ``
+    console.log("cancelling load")
+}
 
 function generateImage(e) {
     e.preventDefault()
-
+    
     let inputPrompt = document.querySelector('.prompt').value
-
+    
     let body = {
         prompt: inputPrompt,
         n: 3,
         size: "512x512"
     }
     
+    showLoading()
+
     axios
     .post(`${baseURL}/images/generations`, body)
     .then((res) => {
+        hideLoading()
         displayResults(res.data)
         // console.log(res.data)
     })
@@ -37,12 +46,14 @@ function generateImage(e) {
     })
 }
 
+
+
 // Delete button removes that result image from the DOM
 const deleteResult = (id) => {
     axios
     .delete(`${baseURL}/images/${id}`)
     .then((res) => {
-        displayAfterDelete(res.data)
+        displayResults(res.data)
         // console.log(res.data)
     })
     .catch(() => console.log('Error deleting image'))
@@ -124,17 +135,12 @@ function displayResults(arr) {
     }
 }
 // We only want the last two items in the array after one is deleted so that we only have the current results being displayed
-function displayAfterDelete(arr) {
-    resultsContainer.innerHTML = ``
+// function displayAfterDelete(arr) {
+//     resultsContainer.innerHTML = ``
 
-    for (let i = 0; i < arr.length; i++) {
-        createResultCard(arr[i])
-    }
-}
-
-// Display favorites on the favorites page
-// function displayFavorites() {
-
+//     for (let i = 0; i < arr.length; i++) {
+//         createResultCard(arr[i])
+//     }
 // }
 
 // Event Listeners

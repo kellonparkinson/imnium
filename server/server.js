@@ -21,7 +21,7 @@ const { home,
   app.get('/gallery', gallery)
   app.get('/dashboard', dashboard)
   app.get('/favorites', favorites)
-  app.get('styles', styles)
+  app.get('/styles', styles)
   app.get('/mainjs', mainJs)
   app.get('/favjs', favJs)
 // -------------------

@@ -38,7 +38,7 @@ function getFavorites() {
     console.log('running getFavorites')
 
     axios
-    .get(`${baseURL}/images/favorites`)
+    .get(`/images/favorites`)
     .then((res) => {
         console.log('getFavorites ran')
         displayFavorites(res.data)
@@ -48,7 +48,7 @@ function getFavorites() {
 
 function testGet() {
     axios
-    .get(`${baseURL}/images/test`)
+    .get(`/images/test`)
     .then((res) => {
         console.log(res.data)
     })

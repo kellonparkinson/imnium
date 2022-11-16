@@ -34,7 +34,7 @@ function generateImage(e) {
     showLoading()
 
     axios
-    .post(`${baseURL}/images/generations`, body)
+    .post(`/images/generations`, body)
     .then((res) => {
         hideLoading()
         displayResults(res.data)
@@ -51,7 +51,7 @@ function generateImage(e) {
 // Delete button removes that result image from the DOM
 const deleteResult = (id) => {
     axios
-    .delete(`${baseURL}/images/${id}`)
+    .delete(`/images/${id}`)
     .then((res) => {
         displayResults(res.data)
         // console.log(res.data)
@@ -89,7 +89,7 @@ function makeFavTrue(resultId) {
     }
     
     axios
-    .post(`${baseURL}/images/favorites`, body)
+    .post(`/images/favorites`, body)
     .then(() => console.log('Added to favorites'))
     .catch((err) => console.log(err))
 }
@@ -103,7 +103,7 @@ function makeFavFalse(resultId) {
     }
     
     axios
-    .post(`${baseURL}/images/favorites`, body)
+    .post(`/images/favorites`, body)
     .then(() => console.log('Removed from favorites'))
     .catch((err) => console.log(err))
 }

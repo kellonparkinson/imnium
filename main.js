@@ -11,7 +11,7 @@ const baseURL = `http://localhost:4040`
 
 // Loading indicator
 function showLoading() {
-    resultsContainer.innerHTML = `<h1>Loading<h1>`
+    resultsContainer.innerHTML = `<div class="spinner"></div>`
     console.log("running load")
 }
 

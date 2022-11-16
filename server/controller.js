@@ -19,10 +19,6 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
-const allImgs = require('./db.json')
-
-let nextId = 1
-
 module.exports = {
     seed: (req, res) => {
         sequelize.query(`
@@ -130,9 +126,5 @@ module.exports = {
             res.send(dbRes[0])
         })
         .catch((err) => console.log(err))
-    },
-    testGet: (req, res) => {
-        console.log('test get worked on backend')
-        res.send('test get worked on front end')
     }
 }

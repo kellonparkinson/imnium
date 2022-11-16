@@ -1,35 +1,46 @@
 const express = require('express')
 const cors = require('cors')
-// require('dotenv').config()
+require('dotenv').config()
 
 const app = express()
 app.use(express.json())
 app.use(cors())
 
-const { seed, generateImage, deleteResult, addToFavs } = require('./controller')
+const { PORT } = process.env
 
-// openai endpoints: /images/generations
-                //   /images/edits
-                //   /images/variations
+// Paths -------------
+const { home,
+  gallery,
+  dashboard,
+  favorites,
+  styles,
+  mainJs,
+  favJs } = require('./pathCtrl')
+  
+  app.get('/', home)
+  app.get('/gallery', gallery)
+  app.get('/dashboard', dashboard)
+  app.get('/favorites', favorites)
+  app.get('styles', styles)
+  app.get('/mainjs', mainJs)
+  app.get('/favjs', favJs)
+// -------------------
+  
+// Main Endpoints --------------
+const { seed,
+  generateImage,
+  deleteResult,
+  toggleFavs,
+  getFavorites } = require('./controller')
 
-// app.get('/hello', (req, res) => {
-//   console.log('hello is working')
-//   res.send('got the response')
-// })
-
+app.get('/images/favorites', getFavorites)
 app.post('/images/generations', generateImage)
 app.delete('/images/:id', deleteResult)
-app.post('/images/favorites', addToFavs)
-app.post('/seed', seed)
+app.post('/images/favorites', toggleFavs)
+// ------------------------------
 
-// Image variations (uses /images/variations)
-  // const response = await openai.createImageVariation(
-  //   fs.createReadStream("corgi_and_cat_paw.png"),
-  //   1,
-  //   "1024x1024"
-  // );
+// Seed database ----------
+app.post('/seeds33d', seed)
+// ------------------------
 
-  // image_url = response.data.data[0].url;
-//-------------------------------------------
-const PORT = 4040
 app.listen(PORT, () => console.log(`Listening on ${PORT}`))

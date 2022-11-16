@@ -1,8 +1,8 @@
 require('dotenv').config()
 const Sequelize = require('sequelize')
-const {CONNECTION_STRING} = process.env
+const { CONNECTION_STRING, OPENAI_API_KEY } = process.env
 
-const sequelize = new Sequelize('postgres://vzmjfjzhtqctcz:fc1ed8fec174b5f9d4c4537c985a6e3402254721204124e3fed530798a1aa60c@ec2-54-163-34-107.compute-1.amazonaws.com:5432/da5l0m2kd0mpjj', {
+const sequelize = new Sequelize(CONNECTION_STRING, {
     dialect: 'postgres',
     dialectOptions: {
       ssl: {
@@ -14,14 +14,10 @@ const sequelize = new Sequelize('postgres://vzmjfjzhtqctcz:fc1ed8fec174b5f9d4c45
 const { Configuration, OpenAIApi } = require("openai");
 
 const configuration = new Configuration({
-    apiKey: "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",
+    apiKey: OPENAI_API_KEY,
 });
 
 const openai = new OpenAIApi(configuration);
-
-const allImgs = require('./db.json')
-
-let nextId = 1
 
 module.exports = {
     seed: (req, res) => {
@@ -31,7 +27,7 @@ module.exports = {
 
         CREATE TABLE results (
             result_id SERIAL PRIMARY KEY, 
-            url VARCHAR,
+            url TEXT,
             favorite BOOLEAN NOT NULL
         );
         `).then(() => {
@@ -54,35 +50,81 @@ module.exports = {
             response.data.data[2].url
         ]
 
-        let newURL = {}
-        for (let i = 0; i < resURLs.length; i++) {
-            newURL = {
-                id: nextId,
-                url: response.data.data[i].url,
-                favorite: false
-            }
-            nextId++
-            allImgs.push(newURL)
-        }
-        // console.log(allImgURLs)
-        res.send(allImgs)
+        sequelize.query(`
+            INSERT INTO results (url, favorite)
+            VALUES
+                ('${response.data.data[0].url}', false),
+                ('${response.data.data[1].url}', false),
+                ('${response.data.data[2].url}', false);
+
+            SELECT * FROM results
+            ORDER BY result_id ASC;
+        `)
+        .then((dbRes) => {
+            console.log('added to table')
+
+            let dbArr = dbRes[0]
+            let lastThree = dbArr.slice(-3)
+            res.send(lastThree)
+        })
+        .catch((err) => console.log(err))
     },
     deleteResult: (req, res) => {
-        const idToDelete = req.params.id
-        let index = allImgs.findIndex((e) => e.id === +idToDelete)
-        allImgs.splice(index, 1)
-        res.send(allImgs)
+        const { id } = req.params
+
+        sequelize.query(`
+            DELETE FROM results
+            WHERE result_id = ${id};
+
+            SELECT * FROM results
+            ORDER BY result_id ASC;
+        `)
+        .then((dbRes) => {
+            console.log('deleted from table')
+
+            let newArr = dbRes[0]
+            let lastTwo = newArr.slice(-2)
+            res.send(lastTwo)
+        })
+        .catch((err) => console.log("Error deleting item", err))
     },
-    addToFavs: (req, res) => {
-        const { id, url, favorite } = req.params
+    toggleFavs: (req, res) => {
+        console.log("hit toggleFavs")
+        const { id, favorite } = req.body
 
-        // let newFav = {
-        //     id,
-        //     url,
-        //     favorite: true
-        // }
-
-        // favImgs.push(newFav)
-        // res.send(favImgs)
+        if (favorite === true) {
+            sequelize.query(`
+                UPDATE results
+                SET favorite = true
+                WHERE result_id = ${id};
+            `)
+            .then(() => {
+                console.log("Favorite added to table")
+                res.sendStatus(200)
+            })
+            .catch((err) => console.log("Error adding favorite", err))
+        } else if (favorite === false) {
+            sequelize.query(`
+                UPDATE results
+                SET favorite = false
+                WHERE result_id = ${id};
+            `)
+            .then(() => {
+                console.log("Favorite removed from table")
+                res.sendStatus(200)
+            })
+            .catch((err) => console.log("Error removing favorite", err))
+        }
+    },
+    getFavorites: (req, res) => {
+        sequelize.query(`
+            SELECT * FROM results
+            WHERE favorite = true;
+        `)
+        .then((dbRes) => {
+            console.log('Retrieved favorites')
+            res.send(dbRes[0])
+        })
+        .catch((err) => console.log(err))
     }
 }

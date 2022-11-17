@@ -551,15 +551,16 @@ body {
 
     .home-img {
         width: 100%;
-        top: 200px;
+        top: 170px;
     }
 
     /* Bottom Container, Home screen */
     .bottom-container {
-        height: 21%;
+        height: 18%;
     }
 
     .desc-container h4 {
+        margin-top: 10px;
         font-size: 28px;
     }
 

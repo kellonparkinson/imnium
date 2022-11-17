@@ -183,7 +183,7 @@ body {
         width: 90%;
         height: 100%;
         border-radius: 32px;
-        top: 230px;
+        top: 210px;
         left: 70px;
     }
 /* -------------------------------- */
@@ -195,7 +195,7 @@ body {
     align-items: center;
     flex-wrap: wrap;
     width: 70%;
-    height: 285px;
+    height: 22%;
     background: rgba(217, 217, 217, 0.2);
     backdrop-filter: blur(15px);
     border-radius: 32px 32px 0px 0px;
